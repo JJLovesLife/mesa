@@ -83,7 +83,7 @@ enum pixel_format {
  * Visual inforation, derived from GLvisual.
  * Basically corresponds to an XVisualInfo.
  */
-struct xmesa_visual {
+struct xmesa_visual { // XMesaCreateVisual
    GLvisual mesa_visual;	/* Device independent visual parameters */
    XMesaDisplay *display;	/* The X11 display */
 #ifdef XFree86Server

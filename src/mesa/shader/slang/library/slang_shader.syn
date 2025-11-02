@@ -525,7 +525,7 @@ conditional_expression_1
     <assignment_expression>             ::= <conditional_expression>
                                           | <unary_expression> <assignment_operator>
                                             <assignment_expression>
-
+不包括 OP_END
     <assignment_operator>               ::= "="
                                           | "*="
                                           | "/="
@@ -816,6 +816,7 @@ init_declarator_list_5
                                           | <fully_specified_type> <identifier> "["
                                             <constant_expression> "]"
                                           | <fully_specified_type> <identifier> "=" <initializer>
+single_declaration_nospace is `struct xxx {}`
 */
 single_declaration
     single_declaration_nospace .or single_declaration_space;

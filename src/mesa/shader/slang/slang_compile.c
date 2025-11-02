@@ -119,21 +119,21 @@ _slang_code_object_dtr(slang_code_object * self)
 
 /* slang_parse_ctx */
 
-typedef struct slang_parse_ctx_
+typedef struct slang_parse_ctx_ // 只在 compile_binary 中创建一个
 {
    const byte *I;
    slang_info_log *L;
    int parsing_builtin;
-   GLboolean global_scope;   /**< Is object being declared a global? */
+   GLboolean global_scope;   /**< Is object being declared a global? */ // root-level or 函数内
    slang_atom_pool *atoms;
    slang_unit_type type;     /**< Vertex vs. Fragment */
 } slang_parse_ctx;
 
 /* slang_output_ctx */
 
-typedef struct slang_output_ctx_
+typedef struct slang_output_ctx_ // 解析 structure, 创建新scope的statement, function definition 会创建新的 output_ctx
 {
-   slang_variable_scope *vars;
+   slang_variable_scope *vars; // 这里保存当前作用域中的 variables. 比如 const int a = 1; 就会放在这里
    slang_function_scope *funs;
    slang_struct_scope *structs;
    slang_var_pool *global_pool;
@@ -1146,7 +1146,7 @@ parse_expression(slang_parse_ctx * C, slang_output_ctx * O,
                return 0;
          C->I++;
 
-         if (!C->parsing_builtin
+         if (!C->parsing_builtin // 对于 builtin 默认 func 是存在的
              && !slang_function_scope_find_by_name(O->funs, op->a_id, 1)) {
             const char *id;
 
@@ -1207,7 +1207,7 @@ parse_parameter_declaration(slang_parse_ctx * C, slang_output_ctx * O,
    if (!parse_type_qualifier(C, &param->type.qualifier))
       return 0;
    switch (*C->I++) {
-   case PARAM_QUALIFIER_IN:
+   case PARAM_QUALIFIER_IN: // 从这里来看 in 是没有额外效果的，等价于 const | none
       if (param->type.qualifier != SLANG_QUAL_CONST
           && param->type.qualifier != SLANG_QUAL_NONE) {
          slang_info_log_error(C->L, "Invalid type qualifier.");
@@ -1365,7 +1365,7 @@ parse_operator_name(slang_parse_ctx * C)
    return 0;
 }
 
-static int
+static int // 没有检查是否有重名的parameter
 parse_function_prototype(slang_parse_ctx * C, slang_output_ctx * O,
                          slang_function * func)
 {
@@ -1471,7 +1471,7 @@ parse_function_definition(slang_parse_ctx * C, slang_output_ctx * O,
    return 1;
 }
 
-static GLboolean
+static GLboolean // deadcode, replaced by _slang_codegen_global_variable
 initialize_global(slang_assemble_ctx * A, slang_variable * var)
 {
    slang_operation op_id, op_assign;
@@ -1899,7 +1899,7 @@ compile_binary(const byte * prod, slang_code_unit * unit,
    return parse_code_unit(&C, unit, program);
 }
 
-static GLboolean
+static GLboolean // 这个函数主要的工作是验证语法，进行预处理，并把原来的source处理成一种更容易处理的后缀语法（类似1, 2 * 这种堆栈式的表达方式）然后传递给slang进行语法树解析，变量scope处理等。
 compile_with_grammar(grammar id, const char *source, slang_code_unit * unit,
                      slang_unit_type type, slang_info_log * infolog,
                      slang_code_unit * builtin,

@@ -51,7 +51,7 @@ struct gl_program_parameter
    /**
     * A sequence of STATE_* tokens and integers to identify GL state.
     */
-   gl_state_index StateIndexes[STATE_LENGTH];
+   gl_state_index StateIndexes[STATE_LENGTH]; // 这些是用来标识不同的builtin gl 变量的
 };
 
 
@@ -62,10 +62,10 @@ struct gl_program_parameter_list
 {
    GLuint Size;           /**< allocated size of Parameters, ParameterValues */
    GLuint NumParameters;  /**< number of parameters in arrays */
-   struct gl_program_parameter *Parameters; /**< Array [Size] */
+   struct gl_program_parameter *Parameters; /**< Array [Size] */ // 1: const: _mesa_add_unnamed_constant
    GLfloat (*ParameterValues)[4];        /**< Array [Size] of GLfloat[4] */
    GLbitfield StateFlags; /**< _NEW_* flags indicating which state changes
-                               might invalidate ParameterValues[] */
+                               might invalidate ParameterValues[] */ // 哪些 gl 内部变量被引用了，对应的哪些public API函数会影响这些变量，从而需要更新 Values
 };
 
 

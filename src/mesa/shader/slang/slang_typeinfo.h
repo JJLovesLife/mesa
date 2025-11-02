@@ -154,9 +154,9 @@ slang_type_specifier_equal(const slang_type_specifier *,
 
 typedef struct slang_typeinfo_
 {
-   GLboolean can_be_referenced;
+   GLboolean can_be_referenced; // 一个作用是判断 out / input
    GLboolean is_swizzled;
-   slang_swizzle swz;
+   slang_swizzle swz; // var.xyzw
    slang_type_specifier spec;
    GLuint array_len;
 } slang_typeinfo;

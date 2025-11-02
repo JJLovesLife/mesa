@@ -124,7 +124,7 @@ _mesa_add_parameter(struct gl_program_parameter_list *paramList,
          struct gl_program_parameter *p = paramList->Parameters + oldNum + i;
          p->Name = name ? _mesa_strdup(name) : NULL;
          p->Type = type;
-         p->Size = size;
+         p->Size = size; // 可能大于4?
          p->DataType = datatype;
          if (values) {
             COPY_4V(paramList->ParameterValues[oldNum + i], values);

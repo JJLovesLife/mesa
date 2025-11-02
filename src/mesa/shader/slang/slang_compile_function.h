@@ -62,7 +62,7 @@ typedef struct slang_function_
    slang_function_kind kind;
    slang_variable header;      /**< The function's name and return type */
    slang_variable_scope *parameters; /**< formal parameters AND local vars */
-   unsigned int param_count;   /**< number of formal params (no locals) */
+   unsigned int param_count;   /**< number of formal params (no locals) */ // 包括返回值(如果非void)
    slang_operation *body;      /**< The instruction tree */
    unsigned int address;       /**< Address of this func in memory */
    slang_fixup_table fixups;   /**< Mem locations which need func's address */

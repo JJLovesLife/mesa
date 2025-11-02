@@ -2929,7 +2929,7 @@ _slang_codegen_global_variable(slang_assemble_ctx *A, slang_variable *var,
       if (dbg) printf("UNIFORM (sz %d) ", size);
    }
    else if (var->type.qualifier == SLANG_QUAL_VARYING) {
-      const GLint size = 4; /* XXX fix */
+      const GLint size = 4; /* XXX fix */ // why?
       if (prog) {
          /* user-defined varying */
          GLint varyingLoc = _mesa_add_varying(prog->Varying, varName, size);

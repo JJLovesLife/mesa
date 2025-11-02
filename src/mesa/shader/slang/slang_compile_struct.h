@@ -47,7 +47,7 @@ typedef struct slang_struct_
 {
 	slang_atom a_name;
 	struct slang_variable_scope_ *fields;
-	slang_struct_scope *structs;
+	slang_struct_scope *structs; // 这个 struct 内部定义的 structs，比如某个 fields 是另一个 struct 类型
 } slang_struct;
 
 int slang_struct_construct (slang_struct *);

@@ -136,14 +136,14 @@ typedef enum
 } slang_ir_opcode;
 
 
-/**
+/** 一个作用是记录哪些是 temp / var 这些，这些在emit的时候要去parameter list里面去分配寄存器， 另一个是记录了输出的位置，主要是那些预设变量，那些 input / output 这种
  * Describes where data storage is allocated.
  */
 struct _slang_ir_storage
 {
    enum register_file File;  /**< PROGRAM_TEMPORARY, PROGRAM_INPUT, etc */
-   GLint Index;  /**< -1 means unallocated */
-   GLint Size;  /**< number of floats */
+   GLint Index;  /**< -1 means unallocated */ // into var table
+   GLint Size;  /**< number of floats */ // 对于array，目前是单个元素的size
    GLuint Swizzle;
    GLint RefCount; /**< Used during IR tree delete */
 };
@@ -168,8 +168,8 @@ typedef struct slang_ir_node_
    GLuint Writemask;  /**< If Opcode == IR_MOVE */
    GLfloat Value[4];    /**< If Opcode == IR_FLOAT */
    slang_variable *Var;  /**< If Opcode == IR_VAR or IR_VAR_DECL */
-   struct slang_ir_node_ *List;  /**< For various linked lists */
-   struct slang_ir_node_ *Parent;  /**< Pointer to logical parent (ie. loop) */
+   struct slang_ir_node_ *List;  /**< For various linked lists */ // for loop op, a list of break/continue ops // 一个作用是检查是否存在 infinite loops
+   struct slang_ir_node_ *Parent;  /**< Pointer to logical parent (ie. loop) */ // 1. continue 的时候指向最近的 loop node 2. break 的时候指向对应的 loop node
    slang_label *Label;  /**< Used for branches */
 } slang_ir_node;
 

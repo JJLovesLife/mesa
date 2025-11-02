@@ -74,13 +74,13 @@ slang_fully_specified_type_copy(slang_fully_specified_type *,
 typedef struct slang_variable_
 {
    slang_fully_specified_type type; /**< Variable's data type */
-   slang_atom a_name;               /**< The variable's name (char *) */
+   slang_atom a_name;               /**< The variable's name (char *) */ // 对于函数（slang_function.header），这个是函数名，包括 operator, 比如 "++"， constructor(此时为type名) 比如 "vec4"
    GLuint array_len;                /**< only if type == SLANG_SPEC_ARRAy */
    struct slang_operation_ *initializer; /**< Optional initializer code */
    GLuint address;                  /**< Storage location */
    GLuint size;                     /**< Variable's size in bytes */
    GLboolean isTemp;                /**< a named temporary (__resultTmp) */
-   void *aux;                       /**< Used during code gen */
+   void *aux;                       /**< Used during code gen */ // init@_slang_codegen_global_variable, _slang_new_ir_storage
 } slang_variable;
 
 

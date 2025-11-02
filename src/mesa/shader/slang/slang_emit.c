@@ -1746,7 +1746,7 @@ emit(slang_emit_info *emitInfo, slang_ir_node *n)
 }
 
 
-/**
+/** 把 main 和 subroutine insts 拼在一个arr，并且修正分支目标地址
  * After code generation, any subroutines will be in separate program
  * objects.  This function appends all the subroutines onto the main
  * program and resolves the linking of all the branch/call instructions.
@@ -1838,9 +1838,9 @@ _slang_emit_code(slang_ir_node *n, slang_var_table *vt,
    emitInfo.Subroutines = NULL;
    emitInfo.NumSubroutines = 0;
 
-   emitInfo.EmitHighLevelInstructions = ctx->Shader.EmitHighLevelInstructions;
-   emitInfo.EmitCondCodes = ctx->Shader.EmitCondCodes;
-   emitInfo.EmitComments = ctx->Shader.EmitComments;
+   emitInfo.EmitHighLevelInstructions = ctx->Shader.EmitHighLevelInstructions; // by default, true
+   emitInfo.EmitCondCodes = ctx->Shader.EmitCondCodes; // by default, true
+   emitInfo.EmitComments = ctx->Shader.EmitComments; // by default, false
    emitInfo.EmitBeginEndSub = GL_TRUE;
 
    if (!emitInfo.EmitCondCodes) {

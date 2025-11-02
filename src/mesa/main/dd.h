@@ -49,7 +49,7 @@ struct mesa_display_list;
  * Note: when new functions are added here, the drivers/common/driverfuncs.c
  * file should be updated too!!!
  */
-struct dd_function_table {
+struct dd_function_table { // _mesa_init_driver_functions & xmesa_init_driver_functions
    /**
     * Return a string as needed by glGetString().
     * Only the GL_RENDERER query must be implemented.  Otherwise, NULL can be
@@ -1013,7 +1013,7 @@ struct dd_function_table {
  * listed, it must restore them to their original values in
  * the disable() callback, below.
  */
-typedef struct {
+typedef struct { // _mesa_save_vtxfmt_init
    /**
     * \name Vertex
     */

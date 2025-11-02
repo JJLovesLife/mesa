@@ -563,7 +563,7 @@ struct gl_accum_attrib
 /**
  * Color buffer attribute group (GL_COLOR_BUFFER_BIT).
  */
-struct gl_colorbuffer_attrib
+struct gl_colorbuffer_attrib // _mesa_init_color
 {
    GLuint ClearIndex;			/**< Index to use for glClear */
    GLclampf ClearColor[4];		/**< Color to use for glClear */
@@ -616,7 +616,7 @@ struct gl_colorbuffer_attrib
 /**
  * Current attribute group (GL_CURRENT_BIT).
  */
-struct gl_current_attrib
+struct gl_current_attrib // _mesa_init_current
 {
    /**
     * \name Current vertex attributes.
@@ -739,7 +739,7 @@ struct gl_enable_attrib
 /**
  * Evaluator attribute group (GL_EVAL_BIT).
  */
-struct gl_eval_attrib
+struct gl_eval_attrib // _mesa_init_eval
 {
    /**
     * \name Enable bits 
@@ -1391,7 +1391,7 @@ struct gl_texture_image
  * wrap modes, filter modes, shadow/texcompare state, and the per-texture
  * color palette.
  */
-struct gl_texture_object
+struct gl_texture_object // _mesa_initialize_texture_object
 {
    _glthread_Mutex Mutex;	/**< for thread safety */
    GLint RefCount;		/**< reference count */
@@ -1598,7 +1598,7 @@ struct gl_transform_attrib
 /**
  * Viewport attribute group (GL_VIEWPORT_BIT).
  */
-struct gl_viewport_attrib
+struct gl_viewport_attrib // _mesa_init_viewport, @glViewport
 {
    GLint X, Y;			/**< position */
    GLsizei Width, Height;	/**< size */
@@ -1718,7 +1718,7 @@ struct gl_array_attrib
    GLbitfield NewState;		/**< mask of _NEW_ARRAY_* values */
 
 #if FEATURE_ARB_vertex_buffer_object
-   struct gl_buffer_object *NullBufferObj;
+   struct gl_buffer_object *NullBufferObj; // _mesa_init_buffer_objects
    struct gl_buffer_object *ArrayBufferObj;
    struct gl_buffer_object *ElementArrayBufferObj;
 #endif
@@ -1783,7 +1783,7 @@ struct gl_2d_map
 /**
  * All evaluator control point state
  */
-struct gl_evaluators
+struct gl_evaluators // _mesa_init_eval
 {
    /** 
     * \name 1-D maps
@@ -2134,7 +2134,7 @@ struct gl_shader_state
 /**
  * State which can be shared by multiple contexts:
  */
-struct gl_shared_state
+struct gl_shared_state // alloc_shared_state
 {
    _glthread_Mutex Mutex;		   /**< for thread safety */
    GLint RefCount;			   /**< Reference count */
@@ -2335,7 +2335,7 @@ struct gl_renderbuffer_attachment
  * In C++ terms, think of this as a base class from which device drivers
  * will make derived classes.
  */
-struct gl_framebuffer
+struct gl_framebuffer // _mesa_initialize_framebuffer
 {
    _glthread_Mutex Mutex;		   /**< for thread safety */
    GLuint Name;      /* if zero, this is a window system framebuffer */
@@ -2359,7 +2359,7 @@ struct gl_framebuffer
    /** \name  Derived Z buffer stuff */
    /*@{*/
    GLuint _DepthMax;	/**< Max depth buffer value */
-   GLfloat _DepthMaxF;	/**< Float max depth buffer value */
+   GLfloat _DepthMaxF;	/**< Float max depth buffer value */ // (1 << Visual.depthBits) - 1
    GLfloat _MRD;	/**< minimum resolvable difference in Z values */
    /*@}*/
 
@@ -2427,7 +2427,7 @@ struct gl_program_constants
  * Constants which may be overridden by device driver during context creation
  * but are never changed after that.
  */
-struct gl_constants
+struct gl_constants // _mesa_init_constants
 {
    GLint MaxTextureLevels;		/**< Maximum number of allowed mipmap levels. */ 
    GLint Max3DTextureLevels;		/**< Maximum number of allowed mipmap levels for 3D texture targets. */
@@ -2888,7 +2888,7 @@ struct __GLcontextRec
    struct _glapi_table *CurrentDispatch;  /**< == Save or Exec !! */
    /*@}*/
 
-   GLvisual Visual;
+   GLvisual Visual; // xmesa_visual.mesa_visual
    GLframebuffer *DrawBuffer;	/**< buffer for writing */
    GLframebuffer *ReadBuffer;	/**< buffer for reading */
    GLframebuffer *WinSysDrawBuffer;  /**< set with MakeCurrent */
@@ -2924,7 +2924,7 @@ struct __GLcontextRec
    GLboolean CompileFlag;	/**< Compile GL commands into display list? */
 
    /** Extension information */
-   struct gl_extensions Extensions;
+   struct gl_extensions Extensions; // _mesa_init_extensions
 
    /** \name State attribute stack (for glPush/PopAttrib) */
    /*@{*/

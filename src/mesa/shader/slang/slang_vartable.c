@@ -27,8 +27,8 @@ struct table
    int NumVars;
    slang_variable **Vars;  /* array [NumVars] */
 
-   TempState Temps[MAX_PROGRAM_TEMPS * 4];  /* per-component state */
-   int ValSize[MAX_PROGRAM_TEMPS];     /* For debug only */
+   TempState Temps[MAX_PROGRAM_TEMPS * 4];  /* per-component state */ // 似乎是用来track这个scope内的寄存器分配状态，标记是 TEMP, VAR 还是 FREE
+   int ValSize[MAX_PROGRAM_TEMPS]; // DEBUG, 记录每个寄存器分配的变量的size
 
    struct table *Parent;  /** Parent scope table */
 };
@@ -40,7 +40,7 @@ struct table
 struct slang_var_table_
 {
    GLint CurLevel;
-   GLuint MaxRegisters;
+   GLuint MaxRegisters; // const, generally 128
    struct table *Top;  /**< Table at top of stack */
 };
 

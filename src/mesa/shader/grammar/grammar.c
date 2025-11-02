@@ -534,12 +534,12 @@ typedef enum emit_dest_
 */
 typedef struct emit_
 {
-    emit_dest m_emit_dest;
+    emit_dest m_emit_dest; // .load or .emit
     emit_type m_emit_type;      /* ed_output */
     byte m_byte;                /* et_byte */
     map_byte *m_regbyte;        /* ed_regbyte */
     byte *m_regname;            /* ed_regbyte - temporary */
-    struct emit_ *m_next;
+    struct emit_ *m_next; // 连续的 .emit
 } emit;
 
 static void emit_create (emit **em)
@@ -742,11 +742,11 @@ typedef struct spec_
 {
     spec_type m_spec_type;
     byte m_byte[2];                 /* st_byte, st_byte_range */
-    byte *m_string;                 /* st_string */
+    byte *m_string;                 /* st_string */ /* st_identifier? */
     struct rule_ *m_rule;           /* st_identifier, st_identifier_loop */
-    emit *m_emits;
+    emit *m_emits; // .emit
     error *m_errtext;
-    cond *m_cond;
+    cond *m_cond;   // .if
     struct spec_ *next;
 } spec;
 
@@ -842,10 +842,10 @@ static grammar next_valid_grammar_id (void)
 */
 typedef struct dict_
 {
-    rule *m_rulez;
-    rule *m_syntax;
-    rule *m_string;
-    map_byte *m_regbytes;
+    rule *m_rulez; // load from grammar, rule lists, those not start with '.'
+    rule *m_syntax; // m_rulez 中 .syntax 名字的那条
+    rule *m_string; // .string 名字的那条
+    map_byte *m_regbytes; // from grammar list of .regbyte, string -> byte
     grammar m_id;
     struct dict_ *next;
 } dict;
@@ -1106,7 +1106,7 @@ static int map_str_find (map_str **ma, const byte *key, byte **data)
 typedef struct map_rule_
 {
     byte *key;
-    rule *data;
+    rule *data; // one of dict.m_rulez
     struct map_rule_ *next;
 } map_rule;
 
@@ -2121,7 +2121,7 @@ static int update_dependency (map_rule *mapr, byte *symbol, rule **ru)
     return 0;
 }
 
-/*
+/* 主要检查一下有没有没有被引用的rule，以及把解析中提取的 rule_name str / reg_byte str 替换为对应的结构体指针，方便后续引用
     returns 0 on success,
     returns 1 otherwise,
 */
@@ -2520,7 +2520,7 @@ match (dict *di, const byte *text, int *index, rule *ru, barray **ba, int filter
 static match_result
 fast_match (dict *di, const byte *text, int *index, rule *ru, int *_PP, bytepool *_BP,
             int filtering_string, regbyte_ctx **rbc)
-{
+{ // 这个 filtering_string 是用来表示是否在匹配 .string 为什么要这个？为了word boundary处理，比如规则是 version 但是文本中是 versions 这种情况先把 versions 整体 filter 出来，而不是匹配掉version只剩下一个s
    int ind = *index;
     int _P = filtering_string ? 0 : *_PP;
     int _P2;
@@ -2763,14 +2763,14 @@ error_get_token (error *er, dict *di, const byte *text, int ind)
     return str;
 }
 
-typedef struct grammar_load_state_
+typedef struct grammar_load_state_ // grammar 解析中使用，完了之后只使用 dict
 {
     dict *di;
-    byte *syntax_symbol;
-    byte *string_symbol;
-    map_str *maps;
-    map_byte *mapb;
-    map_rule *mapr;
+    byte *syntax_symbol; // root .syntax xxx
+    byte *string_symbol; // from grammar .string xxx, only one allowed
+    map_str *maps; // from grammar list of .errtext, string -> string
+    map_byte *mapb; // from grammar list of .emtcode, string -> byte
+    map_rule *mapr; // dict.m_rulez's dict ver
 } grammar_load_state;
 
 static void grammar_load_state_create (grammar_load_state **gr)
@@ -2808,7 +2808,7 @@ static void error_msg(int line, const char *msg)
 }
 
 
-/*
+/* 把 grammar text 解析成对应的结构体，没有更多的处理
     the API
 */
 grammar grammar_load_from_text (const byte *text)
