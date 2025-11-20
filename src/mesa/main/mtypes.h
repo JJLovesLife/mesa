@@ -1625,11 +1625,11 @@ struct gl_buffer_object
 {
    GLint RefCount;
    GLuint Name;
-   GLenum Usage;
+   GLenum Usage; // glBufferData's arg
    GLenum Access;
    GLvoid *Pointer;          /**< Only valid while buffer is mapped */
-   GLsizeiptrARB Size;       /**< Size of storage in bytes */
-   GLubyte *Data;            /**< Location of storage either in RAM or VRAM. */
+   GLsizeiptrARB Size;       /**< Size of storage in bytes */ // glBufferData's arg
+   GLubyte *Data;            /**< Location of storage either in RAM or VRAM. */ // memcpy from glBufferData's arg, in RAM now
    GLboolean OnCard;         /**< Is buffer in VRAM? (hardware drivers) */
 };
 
@@ -1665,12 +1665,13 @@ struct gl_client_array
    GLsizei Stride;		/**< user-specified stride */
    GLsizei StrideB;		/**< actual stride in bytes */
    const GLubyte *Ptr;          /**< Points to array data */
-   GLboolean Enabled;		/**< Enabled flag is a boolean */
-   GLboolean Normalized;        /**< GL_ARB_vertex_program */
+// ^ from glVertexAttribPointer's args
+   GLboolean Enabled;		/**< Enabled flag is a boolean */ // glEnableVertexAttribArray
+   GLboolean Normalized;        /**< GL_ARB_vertex_program */ // from glVertexAttribPointer's args
 
    /**< GL_ARB_vertex_buffer_object */
-   struct gl_buffer_object *BufferObj;
-   GLuint _MaxElement;
+   struct gl_buffer_object *BufferObj; // ctx->Array.ArrayBufferObj, i.e. glBindBuffer(GL_ARRAY_BUFFER, ...)
+   GLuint _MaxElement; // 根据 BufferObj 大小计算
 };
 
 
@@ -1696,7 +1697,7 @@ struct gl_array_object
    /*@}*/
 
    /** Generic arrays for vertex programs/shaders */
-   struct gl_client_array VertexAttrib[VERT_ATTRIB_MAX];
+   struct gl_client_array VertexAttrib[VERT_ATTRIB_MAX]; // glVertexAttribPointer, _mesa_VertexAttribPointerARB
 
    /** Mask of _NEW_ARRAY_* values indicating which arrays are enabled */
    GLbitfield _Enabled;
@@ -1951,7 +1952,7 @@ struct gl_vertex_program_state
    /** Currently enabled and valid program (including internal programs
     * and compiled shader programs).
     */
-   struct gl_vertex_program *_Current;
+   struct gl_vertex_program *_Current; // ctx->Shader.CurrentProgram->VertexProgram
 
    GLfloat Parameters[MAX_PROGRAM_ENV_PARAMS][4]; /**< Env params */
 
@@ -2122,7 +2123,7 @@ struct gl_shader_program
  */
 struct gl_shader_state
 {
-   struct gl_shader_program *CurrentProgram; /**< The user-bound program */
+   struct gl_shader_program *CurrentProgram; /**< The user-bound program */ // glUseProgram
    /** Driver-selectable options: */
    GLboolean EmitHighLevelInstructions; /**< IF/ELSE/ENDIF vs. BRA, etc. */
    GLboolean EmitCondCodes;             /**< Use condition codes? */

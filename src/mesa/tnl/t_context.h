@@ -201,7 +201,7 @@ struct vertex_buffer
     * XXX some of these fields alias AttribPtr below and should be removed
     * such as NormalPtr, TexCoordPtr, FogCoordPtr, etc.
     */
-   GLuint      *Elts;		                
+   GLuint      *Elts;		                // NULL if not using indexed rendering
    GLvector4f  *ObjPtr;		                /* _TNL_BIT_POS */
    GLvector4f  *EyePtr;		                /* _TNL_BIT_POS */
    GLvector4f  *ClipPtr;	                /* _TNL_BIT_POS */
@@ -218,7 +218,7 @@ struct vertex_buffer
    GLvector4f  *SecondaryColorPtr[2];           /* _TNL_BIT_COLOR1 */
    GLvector4f  *FogCoordPtr;	                /* _TNL_BIT_FOG */
 
-   const struct _mesa_prim  *Primitive;	              
+   const struct _mesa_prim  *Primitive;	              // pass in by draw_prims
    GLuint      PrimitiveCount;	      
 
    /* Inputs to the vertex program stage */

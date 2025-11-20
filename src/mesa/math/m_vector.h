@@ -61,11 +61,11 @@
  * the transformation routines.
  */
 typedef struct {
-   GLfloat (*data)[4];	/* may be malloc'd or point to client data */
-   GLfloat *start;	/* points somewhere inside of <data> */
-   GLuint count;	/* size of the vector (in elements) */
-   GLuint stride;	/* stride from one element to the next (in bytes) */
-   GLuint size;		/* 2-4 for vertices and 1-4 for texcoords */
+   GLfloat (*data)[4];	/* may be malloc'd or point to client data */ // from glVertexAttribPointer or [发生了 normalization] 一个malloc的内存，存有normalzied后的数据
+   GLfloat *start;	/* points somewhere inside of <data> */ // == data
+   GLuint count;	/* size of the vector (in elements) */ // from glVertexAttribPointer
+   GLuint stride;	/* stride from one element to the next (in bytes) */ // from glVertexAttribPointer
+   GLuint size;		/* 2-4 for vertices and 1-4 for texcoords */ // from glVertexAttribPointer
    GLuint flags;	/* which columns are dirty */
    void *storage;	/* self-allocated storage */
 } GLvector4f;

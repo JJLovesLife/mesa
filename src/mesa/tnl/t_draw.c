@@ -192,10 +192,10 @@ static void bind_inputs( GLcontext *ctx,
       const void *ptr;
 
       if (inputs[i]->BufferObj->Name) { 
-	 if (!inputs[i]->BufferObj->Pointer) {
+	 if (!inputs[i]->BufferObj->Pointer) { // Q: 什么情况下会已经map了？
 	    bo[*nr_bo] = inputs[i]->BufferObj;
 	    (*nr_bo)++;
-	    ctx->Driver.MapBuffer(ctx, 
+	    ctx->Driver.MapBuffer(ctx, // 对于大多数 driver，目前是不会真的 map 的
 				  GL_ARRAY_BUFFER,
 				  GL_READ_ONLY_ARB,
 				  inputs[i]->BufferObj);

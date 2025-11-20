@@ -123,7 +123,7 @@ struct vbo_exec_context
        * look like this and remove the mirror):
        */
       const struct gl_client_array *legacy_array[16];
-      const struct gl_client_array *generic_array[16];
+      const struct gl_client_array *generic_array[16]; // glVertexAttribPointer, _mesa_VertexAttribPointerARB
 
       /* Arrays and current values manipulated according to program
        * mode, etc.  These are the attributes as seen by vertex
