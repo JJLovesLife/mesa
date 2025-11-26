@@ -102,7 +102,7 @@ struct __DRIdisplayRec {
      * Array of pointers to methods to create and initialize the private DRI
      * screen data.
      */
-    PFNCREATENEWSCREENFUNC * createNewScreen;
+    PFNCREATENEWSCREENFUNC * createNewScreen; // dlsym, [#num of screens]
 };
 
 
@@ -111,8 +111,8 @@ struct __DRIdisplayRec {
 */
 struct __DRIdriverRec {
    const char *name;
-   void *handle;
-   PFNCREATENEWSCREENFUNC createNewScreenFunc;
+   void *handle; // dlopen
+   PFNCREATENEWSCREENFUNC createNewScreenFunc; // dlsym("createNewScreenName")
    struct __DRIdriverRec *next;
 };
 
@@ -188,7 +188,7 @@ typedef struct __GLXattributeMachineRec {
  * GLX state that needs to be kept on the client.  One of these records
  * exist for each context that has been made current by this client.
  */
-struct __GLXcontextRec {
+struct __GLXcontextRec { // AllocateGLXContext
     /**
      * \name Drawing command buffer.
      *
@@ -471,7 +471,7 @@ typedef struct __GLXscreenConfigsRec {
      * libGL.
      */
     /*@{*/
-    unsigned char direct_support[8];
+    unsigned char direct_support[8]; // __glXScrEnableExtension, set during __driUtilCreateNewScreen
     GLboolean ext_list_first_time;
     /*@}*/
 
@@ -518,7 +518,7 @@ struct __GLXdisplayPrivateRec {
      * Also, per screen data which now includes the server \c GLX_EXTENSION
      * string.
      */
-    __GLXscreenConfigs *screenConfigs;
+    __GLXscreenConfigs *screenConfigs; // [# of screens]
 
 #ifdef GLX_DIRECT_RENDERING
     /**

@@ -442,7 +442,7 @@ struct __DRIscreenPrivateRec {
      *   - map the frame buffer, SAREA, etc.
      *   - close the kernel device driver
      */
-    int fd;
+    int fd; // drmOpenOnce
 
     /**
      * SAREA pointer 
@@ -473,7 +473,7 @@ struct __DRIscreenPrivateRec {
      * This data is accessed by the client driver only.
      */
     /*@{*/
-    void *pDevPriv;
+    void *pDevPriv; // from XF86DRIGetDeviceInfo
     int devPrivSize;
     /*@}*/
 
@@ -499,7 +499,7 @@ struct __DRIscreenPrivateRec {
      * 
      * This pointer is never touched by the DRI layer.
      */
-    void *private;
+    void *private; // radeonCreateScreen
 
     /**
      * GLX visuals / FBConfigs for this screen.  These are stored as a

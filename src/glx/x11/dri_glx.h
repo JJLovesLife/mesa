@@ -45,7 +45,7 @@ struct __DRIdisplayPrivateRec {
     int driMinor;
     int driPatch;
 
-    /*
+    /* dlopen
     ** Array of library handles [indexed by screen number]
     */
     void **libraryHandles;
