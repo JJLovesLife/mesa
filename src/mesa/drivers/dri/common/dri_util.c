@@ -38,7 +38,7 @@ typedef GLboolean ( * PFNGLXGETMSCRATEOMLPROC) (__DRInativeDisplay *dpy, __DRIid
 
 /* This pointer *must* be set by the driver's __driCreateNewScreen funciton!
  */
-const __DRIinterfaceMethods * dri_interface = NULL;
+const __DRIinterfaceMethods * dri_interface = NULL; // interface_methods @ glxext.c
 
 /**
  * This is used in a couple of places that call \c driCreateNewDrawable.
@@ -50,7 +50,7 @@ static const int empty_attribute_list[1] = { None };
  * Cached copy of the internal API version used by libGL and the client-side
  * DRI driver.
  */
-static int api_ver = 0;
+static int api_ver = 0; // __glXGetInternalVersion() @ glxcmds.c = 20070105
 
 /* forward declarations */
 static int driQueryFrameTracking( __DRInativeDisplay *dpy, void *priv,

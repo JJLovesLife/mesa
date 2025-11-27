@@ -215,7 +215,7 @@ typedef struct
    /** Internal hooks, kept up to date by the same mechanism as above.
     */
    blend_func BlendFunc;
-   texture_sample_func TextureSample[MAX_TEXTURE_IMAGE_UNITS];
+   texture_sample_func TextureSample[MAX_TEXTURE_IMAGE_UNITS]; // _swrast_update_texture_samplers
 
    /** Buffer for saving the sampled texture colors.
     * Needed for GL_ARB_texture_env_crossbar implementation.

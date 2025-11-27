@@ -36,7 +36,7 @@
 
 typedef struct {
    GLuint NewState;
-   GLenum render_prim;
+   GLenum render_prim; // glDrawArrays's mode
    DECLARE_RENDERINPUTS(last_index_bitset);
    SWvertex *verts;
 } SScontext;

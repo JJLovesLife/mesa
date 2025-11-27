@@ -377,7 +377,7 @@ struct __DRIcontextPrivateRec {
 /**
  * Per-screen private driver information.
  */
-struct __DRIscreenPrivateRec {
+struct __DRIscreenPrivateRec { // init @ __driUtilCreateNewScreen
     /**
      * Display for this screen
      */
@@ -391,7 +391,7 @@ struct __DRIscreenPrivateRec {
     /**
      * Callback functions into the hardware-specific DRI driver code.
      */
-    struct __DriverAPIRec DriverAPI;
+    struct __DriverAPIRec DriverAPI; // radeonAPI @ radeon_screen.c
 
     /**
      * \name DDX version
@@ -516,7 +516,7 @@ struct __DRIscreenPrivateRec {
      * Pointer back to the \c __DRIscreen that contains this structure.
      */
 
-    __DRIscreen *psc;
+    __DRIscreen *psc; // __GLXscreenConfigsRec.driScreen
 };
 
 

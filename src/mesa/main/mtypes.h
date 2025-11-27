@@ -2898,7 +2898,7 @@ struct __GLcontextRec
    /**
     * Device driver function pointer table
     */
-   struct dd_function_table Driver;
+   struct dd_function_table Driver; // [DRI] fill @ r300CreateContext
 
    void *DriverCtx;	/**< Points to device driver context/state */
 

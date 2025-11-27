@@ -1,5 +1,5 @@
 ### Lists of source files, included by Makefiles
-
+# [default][dri]
 MAIN_SOURCES = \
 	main/api_arrayelt.c \
 	main/api_loopback.c \
@@ -63,12 +63,12 @@ MAIN_SOURCES = \
 	main/texstore.c \
 	main/varray.c \
 	main/vtxfmt.c
-
+# [default]
 GLAPI_SOURCES = \
 	main/dispatch.c \
 	glapi/glapi.c \
 	glapi/glthread.c
-
+# [default][dri]
 MATH_SOURCES = \
 	math/m_debug_clip.c \
 	math/m_debug_norm.c \
@@ -78,7 +78,7 @@ MATH_SOURCES = \
 	math/m_translate.c \
 	math/m_vector.c \
 	math/m_xform.c
-
+# [default][dri]
 SWRAST_SOURCES = \
 	swrast/s_aaline.c \
 	swrast/s_aatriangle.c \
@@ -109,11 +109,11 @@ SWRAST_SOURCES = \
 	swrast/s_texstore.c \
 	swrast/s_triangle.c \
 	swrast/s_zoom.c
-
+# [default][dri]
 SWRAST_SETUP_SOURCES = \
 	swrast_setup/ss_context.c \
 	swrast_setup/ss_triangle.c 
-
+# [default][dri]
 TNL_SOURCES = \
 	tnl/t_context.c \
 	tnl/t_pipeline.c \
@@ -132,7 +132,7 @@ TNL_SOURCES = \
 	tnl/t_vertex.c \
 	tnl/t_vertex_sse.c \
 	tnl/t_vertex_generic.c 
-
+# [default][dri]
 VBO_SOURCES = \
 	vbo/vbo_context.c \
 	vbo/vbo_exec.c \
@@ -149,7 +149,7 @@ VBO_SOURCES = \
 	vbo/vbo_save_draw.c \
 	vbo/vbo_save_loopback.c 
 
-
+# [default][dri]
 SHADER_SOURCES = \
 	shader/arbprogparse.c \
 	shader/arbprogram.c \
@@ -167,7 +167,7 @@ SHADER_SOURCES = \
 	shader/prog_statevars.c \
 	shader/programopt.c \
 	shader/shader_api.c \
-
+# [default][dri]
 SLANG_SOURCES =	\
 	shader/slang/slang_builtin.c	\
 	shader/slang/slang_codegen.c	\
@@ -190,7 +190,7 @@ SLANG_SOURCES =	\
 	shader/slang/slang_typeinfo.c	\
 	shader/slang/slang_vartable.c	\
 	shader/slang/slang_utility.c
-
+# [default][dri]
 ASM_C_SOURCES =	\
 	x86/common_x86.c \
 	x86/x86.c \
@@ -236,10 +236,10 @@ SPARC_SOURCES =			\
 
 SPARC_API =			\
 	sparc/glapi_sparc.S
-
+# [default]
 COMMON_DRIVER_SOURCES =			\
 	drivers/common/driverfuncs.c
-
+# [default]
 X11_DRIVER_SOURCES =		\
 	drivers/x11/glxapi.c	\
 	drivers/x11/fakeglx.c	\
@@ -254,7 +254,7 @@ X11_DRIVER_SOURCES =		\
 
 OSMESA_DRIVER_SOURCES = \
 	drivers/osmesa/osmesa.c
-
+# [default]
 GLIDE_DRIVER_SOURCES =			\
 	drivers/glide/fxapi.c		\
 	drivers/glide/fxdd.c		\

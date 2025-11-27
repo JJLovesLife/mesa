@@ -136,7 +136,7 @@ struct __DRIversionRec {
 
 typedef void (*__DRIfuncPtr)(void);
 
-struct __DRIinterfaceMethodsRec {
+struct __DRIinterfaceMethodsRec { // interface_methods @ glxext.c
     /**
      * Get pointer to named function.
      */
@@ -356,7 +356,7 @@ struct __DRIscreenRec {
      * Method to create the private DRI context data and initialize the
      * context dependent methods.
      *
-     * \since Internal API version 20031201.
+     * \since Internal API version 20031201. // set @ __driUtilCreateNewScreen
      */
     void * (*createNewContext)(__DRInativeDisplay *dpy, const __GLcontextModes *modes,
 			       int render_type,
