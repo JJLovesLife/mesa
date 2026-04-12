@@ -64,7 +64,7 @@ ${format_enum_value(value)}
 };
 % elif isinstance(decl, intel_device_info.Struct):
 
-struct ${decl.name}
+${format_struct_comment(decl)}struct ${decl.name}
 {
 % for member in decl.members:
 ${format_struct_member(member)}
@@ -115,6 +115,25 @@ def format_define(v):
         comment = f" /* {v.comment} */"
     return f"#define {v.name} ({v.value}){comment}"
 
+def format_comment(comment, leading_newline=False):
+    if not comment:
+        return ""
+
+    prefix = "\n" if leading_newline else ""
+    if "\n" in comment:
+        comment_lines = [f" * {line}".rstrip() for line in comment.split('\n')]
+        comment_lines.insert(0, f"{prefix}/**")
+        comment_lines.append(" */")
+        return '\n'.join(comment_lines) + "\n"
+
+    return f"{prefix}/* {comment} */\n"
+
+def format_struct_comment(s):
+    """
+    Routine to format comments attached to a struct declaration.
+    """
+    return format_comment(getattr(s, "comment", None))
+
 def format_struct_member(m):
     """
     Routine to format the printing of a struct member.  Mako templates are not
@@ -123,15 +142,7 @@ def format_struct_member(m):
      - optional array lengths
      - enum / struct member type declarations
     """
-    comment = ""
-    if m.comment:
-        if "\n" in m.comment:
-            comment_lines = [ f" * {line}".rstrip() for line in m.comment.split('\n')]
-            comment_lines.insert(0, "\n/**")
-            comment_lines.append(" */\n")
-            comment = '\n'.join(comment_lines)
-        else:
-            comment = f"\n/* {m.comment} */\n"
+    comment = format_comment(m.comment, leading_newline=True)
     array = ""
     if m.array:
         array = f"[{m.array}]"
@@ -153,11 +164,13 @@ def main():
     try:
         outf.write(Template(template).render(format_enum_value=format_enum_value,
                                              format_struct_member=format_struct_member,
+                                             format_struct_comment=format_struct_comment,
                                              format_define=format_define))
     except:
         # provide some debug information to the user
         print(exceptions.text_error_template().render(format_enum_value=format_enum_value,
                                                       format_struct_member=format_struct_member,
+                                                      format_struct_comment=format_struct_comment,
                                                       format_define=format_define))
         sys.exit(1)
     outf.close()

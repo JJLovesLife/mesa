@@ -79,9 +79,10 @@ class Member:
 
 class Struct:
     """Stores details needed to declare and serialize a struct"""
-    def __init__(self, name, members):
+    def __init__(self, name, members, comment=None):
         self.name = name
         self.members = members
+        self.comment = comment
         TYPES.append(self)
         TYPES_BY_NAME[name] = TYPES[-1]
 
@@ -351,7 +352,7 @@ Struct("intel_device_info",
                num_slices if some slices are fused).""")),
 
         Member("unsigned", "num_subslices", array="INTEL_DEVICE_MAX_SLICES",
-               comment="Number of subslices for each slice (used to be uniform until CNL)."),
+               comment="Number of subslices for each slice (used to be uniform until CNL).\n但是 fill_masks 中有个 assert 断言了所有 [:num_slices) 的 num_subslices 都相同"),
 
         Member("unsigned", "max_subslices_per_slice", compiler_field=True,
                comment=dedent("""\
