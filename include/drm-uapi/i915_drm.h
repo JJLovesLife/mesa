@@ -3263,6 +3263,13 @@ struct drm_i915_query_topology_info {
 	 *            (X * max_subslices + Y) * eu_stride +
 	 *            Z / 8
 	 *       ] >> (Z % 8)) & 1
+	 * 
+	 * +---------------------------+----------------------------------------+----------------------------------------+
+	 * | slice mask                | subslice masks                         | EU masks                               |
+	 * | ceil(max_slices / 8)      | max_slices * subslice_stride           | max_slices * max_subslices * eu_stride |
+	 * +---------------------------+----------------------------------------+----------------------------------------+
+	 * ^                           ^                                        ^
+	 * 0                           subslice_offset                          eu_offset
 	 */
 	__u8 data[];
 };

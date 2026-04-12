@@ -478,5 +478,5 @@ Struct("intel_device_info",
         Member("intel_device_info_mem_desc", "mem"),
         Member("intel_device_info_pat_desc", "pat"),
         Member("intel_cooperative_matrix_configuration",
-               "cooperative_matrix_configurations", array=16)]
-       )
+               "cooperative_matrix_configurations", array=16)],
+       comment="根据 PCI device ID 从 SKU static list 中选择")

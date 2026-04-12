@@ -33,13 +33,13 @@ struct instance_info {
    PFN_vkDestroyInstance DestroyInstance;
    PFN_vkEnumeratePhysicalDevices EnumeratePhysicalDevices;
    PFN_vkEnumeratePhysicalDeviceGroups EnumeratePhysicalDeviceGroups;
-   PFN_vkGetInstanceProcAddr GetInstanceProcAddr;
+   PFN_vkGetInstanceProcAddr GetInstanceProcAddr; // next hop
    PFN_vkEnumerateDeviceExtensionProperties EnumerateDeviceExtensionProperties;
    PFN_vkGetPhysicalDeviceProperties GetPhysicalDeviceProperties;
    PFN_vkGetPhysicalDeviceProperties2 GetPhysicalDeviceProperties2;
    bool has_pci_bus, has_vulkan11;
    bool has_wayland, has_xcb;
-   bool xserver;
+   bool xserver; // 根据 app name / engine name 判断
 
    /* don't do device selection */
    bool bypass_device_select;

@@ -117,7 +117,7 @@ struct vk_device {
    struct vk_device_extension_table enabled_extensions;
 
    /** Table of enabled features */
-   struct vk_features enabled_features;
+   struct vk_features enabled_features; // 用户在 CreateDevice 时候 enabled 的 features
 
    /** Device-level dispatch table */
    struct vk_device_dispatch_table dispatch_table;
@@ -312,7 +312,7 @@ struct vk_device {
 
    /* For VK_KHR_pipeline_binary */
    bool disable_internal_cache;
-
+   /* VK_STRUCTURE_TYPE_DEVICE_DEVICE_MEMORY_REPORT_CREATE_INFO_EXT */
    struct vk_device_memory_report *memory_reports;
    uint32_t memory_report_count;
 };
