@@ -2601,6 +2601,9 @@ struct gl_renderbuffer_attachment
     * If \c Type is \c GL_RENDERBUFFER_EXT, this stores a pointer to the
     * application supplied renderbuffer object.
     */
+   /**
+    * If \c Type is \c GL_TEXTURE, 这会是一个包装了 texture 的代理 gl_renderbuffer
+    */
    struct gl_renderbuffer *Renderbuffer;
 
    /**
@@ -2749,7 +2752,7 @@ struct gl_framebuffer
    bool FlipY;
 
    /** Delete this framebuffer */
-   void (*Delete)(struct gl_framebuffer *fb);
+   void (*Delete)(struct gl_framebuffer *fb); // _mesa_destroy_framebuffer | delete_dummy_framebuffer
 
    struct pipe_frontend_drawable *drawable;
    enum st_attachment_type statts[ST_ATTACHMENT_COUNT];

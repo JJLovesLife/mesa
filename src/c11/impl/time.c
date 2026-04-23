@@ -135,4 +135,4 @@ int c23_timespec_get(struct timespec *ts, int base)
 }
 #endif
 
-#endif /* !HAVE_TIMESPEC_GET */
+#endif /* !_TIMESPEC_GET_NEED_IMPL */

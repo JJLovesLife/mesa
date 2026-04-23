@@ -2406,6 +2406,13 @@ _mesa_es_error_check_format_and_type(const struct gl_context *ctx,
  * This is the format which is used during texture application (i.e. the
  * texture format and env mode determine the arithmetic used.
  */
+/**
+ * 去除掉 bits / order / sRGB / compress 等
+ * ALPHA / LUMINANCE / LUMINANCE_ALPHA / INTENSITY
+ * RED / RG / RGB / RGBA (包括 sRGBA, BGRA)
+ * DEPTH_COMPONENT / DEPTH_STENCIL / STENCIL_INDEX
+ * YCBCR_MESA
+ */
 GLint
 _mesa_base_tex_format(const struct gl_context *ctx, GLint internalFormat)
 {

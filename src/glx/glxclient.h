@@ -85,7 +85,7 @@ extern void DRI_glXUseXFont(struct glx_context *ctx,
  * \c driCreateDisplay call.
  */
 typedef struct __GLXDRIdisplay __GLXDRIdisplay;
-typedef struct __GLXDRIscreenRec __GLXDRIscreen;
+typedef struct __GLXDRIscreenRec __GLXDRIscreen; // DRI related vtable for glx_screen, wrap in a structure to support conditional compile more cleanly
 typedef struct __GLXDRIdrawableRec __GLXDRIdrawable;
 
 struct __GLXDRIscreenRec {

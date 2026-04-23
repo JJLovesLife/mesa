@@ -1058,7 +1058,7 @@ st_api_get_current(void)
    return ctx ? ctx->st : NULL;
 }
 
-
+// Q: 为什么 `gl_framebuffer` 不是一个 `pipe_frontend_drawable` 中的字段？ Quick A: `pipe_frontend_drawable` 可以被多个 context 共享，而 `gl_framebuffer` 不能再多个 context 中共享。
 static struct gl_framebuffer *
 st_framebuffer_reuse_or_create(struct st_context *st,
                                struct pipe_frontend_drawable *drawable)

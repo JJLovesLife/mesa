@@ -295,7 +295,7 @@ _mesa_WindowRectanglesEXT(GLenum mode, GLsizei count, const GLint *box)
       box += 4;
    }
 
-   st_flush_bitmap_cache(st_context(ctx));
+   st_flush_bitmap_cache(st_context(ctx)); // TODO: 这个据说是因为 bitmap cache 只缓存了部分属性，比如 scissor，但是没有缓存 window rectangles，所以需要在修改 window rectangles 之前先 flush bitmap cache，避免 bitmap cache 中的属性和当前的 window rectangles 不一致导致错误。需要确认一下这个说法是否正确，即缓存结构到底是怎么样的。
 
    FLUSH_VERTICES(ctx, 0, GL_SCISSOR_BIT);
    ST_SET_STATE(ctx->NewDriverState, ST_NEW_WINDOW_RECTANGLES);

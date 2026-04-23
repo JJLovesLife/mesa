@@ -47,8 +47,8 @@ typedef struct __GLXDRIconfigPrivateRec __GLXDRIconfigPrivate;
 
 struct __GLXDRIconfigPrivateRec
 {
-   struct glx_config base;
-   const struct dri_config *driConfig;
+   struct glx_config base; // GLX side, the server
+   const struct dri_config *driConfig; // DRI side, the client
 };
 
 extern struct glx_config *driConvertConfigs(struct glx_config * modes,

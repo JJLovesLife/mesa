@@ -261,8 +261,8 @@ static const struct extension_info known_gl_extensions[] = {
 
 
 /* global bit-fields of available extensions and their characteristics */
-static unsigned char client_glx_only[__GLX_EXT_BYTES];
-static unsigned char direct_glx_only[__GLX_EXT_BYTES];
+static unsigned char client_glx_only[__GLX_EXT_BYTES]; // 不管 GLX server (X Windows Server) 支持与否，客户端 (libGL) 都支持的 GLX 扩展，只有 ARB_get_proc_address
+static unsigned char direct_glx_only[__GLX_EXT_BYTES]; // 只涉及 DRI component 的 GLX 扩展，无需 GLX server 支持，但是 indirect 下不支持。
 
 /**
  * Bits representing the set of extensions that are enabled by default in all
