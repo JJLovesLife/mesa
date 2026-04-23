@@ -34,7 +34,7 @@ struct radv_amdgpu_map_range {
 
 struct radv_amdgpu_winsys_bo {
    struct radeon_winsys_bo base;
-   amdgpu_va_handle va_handle;
+   amdgpu_va_handle va_handle; // libdrm_amdgpu 维护的 VA memory managenent structure, 没有实际和 KMD 交互
    uint8_t priority;
 
    union {
